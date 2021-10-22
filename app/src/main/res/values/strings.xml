@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SpotifyClone</string>
+    <string name="notification_channel_name">Canal de Música</string>
+    <string name="notification_channel_description">Mostrar a música atual tocando</string>
 </resources>
