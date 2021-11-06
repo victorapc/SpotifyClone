@@ -19,8 +19,9 @@ class MusicNotificationManager(
     private val context: Context,
     sessionToken: MediaSessionCompat.Token,
     notificationListener: PlayerNotificationManager.NotificationListener,
-    private val newSongCallBack: () -> Unit
+    private val newSongCallback: () -> Unit
 ) {
+
     private val notificationManager: PlayerNotificationManager
 
     init {
@@ -46,6 +47,7 @@ class MusicNotificationManager(
     private inner class DescriptionAdapter(
         private val mediaController: MediaControllerCompat
     ) : PlayerNotificationManager.MediaDescriptionAdapter {
+
         override fun getCurrentContentTitle(player: Player): CharSequence {
             return mediaController.metadata.description.title.toString()
         }
@@ -73,7 +75,6 @@ class MusicNotificationManager(
                     }
 
                     override fun onLoadCleared(placeholder: Drawable?) = Unit
-
                 })
             return null
         }

@@ -1,6 +1,5 @@
 package br.com.inux.spotifyclone.ui.viewmodels
 
-import android.media.browse.MediaBrowser
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_MEDIA_ID
 import androidx.hilt.lifecycle.ViewModelInject
@@ -62,11 +61,11 @@ class MainViewModel @ViewModelInject constructor(
 
     fun playOrToggleSong(mediaItem: Song, toggle: Boolean = false) {
         val isPrepared = playbackState.value?.isPrepared ?: false
-        if (isPrepared && mediaItem.mediaId ==
+        if(isPrepared && mediaItem.mediaId ==
             curPlayingSong.value?.getString(METADATA_KEY_MEDIA_ID)) {
             playbackState.value?.let { playbackState ->
                 when {
-                    playbackState.isPlaying -> if (toggle) musicServiceConnection.transportControls.pause()
+                    playbackState.isPlaying -> if(toggle) musicServiceConnection.transportControls.pause()
                     playbackState.isPlayEnabled -> musicServiceConnection.transportControls.play()
                     else -> Unit
                 }
@@ -78,8 +77,6 @@ class MainViewModel @ViewModelInject constructor(
 
     override fun onCleared() {
         super.onCleared()
-        musicServiceConnection.unsubscribe(MEDIA_ROOT_ID, object : MediaBrowserCompat.SubscriptionCallback() {
-
-        })
+        musicServiceConnection.unsubscribe(MEDIA_ROOT_ID, object : MediaBrowserCompat.SubscriptionCallback() {})
     }
 }

@@ -14,6 +14,7 @@ class MusicPlaybackPreparer(
     private val firebaseMusicSource: FirebaseMusicSource,
     private val playerPrepared: (MediaMetadataCompat?) -> Unit
 ) : MediaSessionConnector.PlaybackPreparer {
+
     override fun onCommand(
         player: Player,
         controlDispatcher: ControlDispatcher,
@@ -31,9 +32,7 @@ class MusicPlaybackPreparer(
 
     override fun onPrepareFromMediaId(mediaId: String, playWhenReady: Boolean, extras: Bundle?) {
         firebaseMusicSource.whenReady {
-            val itemToPlay = firebaseMusicSource.songs.find {
-                mediaId == it.description.mediaId
-            }
+            val itemToPlay = firebaseMusicSource.songs.find { mediaId == it.description.mediaId }
             playerPrepared(itemToPlay)
         }
     }
@@ -41,5 +40,4 @@ class MusicPlaybackPreparer(
     override fun onPrepareFromSearch(query: String, playWhenReady: Boolean, extras: Bundle?) = Unit
 
     override fun onPrepareFromUri(uri: Uri, playWhenReady: Boolean, extras: Bundle?) = Unit
-
 }

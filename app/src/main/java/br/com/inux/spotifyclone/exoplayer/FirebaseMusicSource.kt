@@ -18,6 +18,7 @@ import javax.inject.Inject
 class FirebaseMusicSource @Inject constructor(
     private val musicDatabase: MusicDatabase
 ){
+
     var songs = emptyList<MediaMetadataCompat>()
 
     suspend fun fetchMediaData() = withContext(Dispatchers.IO) {
@@ -41,12 +42,11 @@ class FirebaseMusicSource @Inject constructor(
 
     fun asMediaSource(dataSourceFactory: DefaultDataSourceFactory): ConcatenatingMediaSource {
         val concatenatingMediaSource = ConcatenatingMediaSource()
-        songs.forEach{ song ->
+        songs.forEach { song ->
             val mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory)
                 .createMediaSource(song.getString(METADATA_KEY_MEDIA_URI).toUri())
             concatenatingMediaSource.addMediaSource(mediaSource)
         }
-
         return concatenatingMediaSource
     }
 
@@ -65,20 +65,20 @@ class FirebaseMusicSource @Inject constructor(
 
     private var state: State = STATE_CREATED
         set(value) {
-            if (value == STATE_INITIALIZED || value == STATE_ERROR) {
+            if(value == STATE_INITIALIZED || value == STATE_ERROR) {
                 synchronized(onReadyListeners) {
-                    field = state
+                    field = value
                     onReadyListeners.forEach { listener ->
                         listener(state == STATE_INITIALIZED)
                     }
                 }
             } else {
-                field = state
+                field = value
             }
         }
 
     fun whenReady(action: (Boolean) -> Unit): Boolean {
-        if (state == STATE_CREATED || state == STATE_INITIALIZING) {
+        if(state == STATE_CREATED || state == STATE_INITIALIZING) {
             onReadyListeners += action
             return false
         } else {

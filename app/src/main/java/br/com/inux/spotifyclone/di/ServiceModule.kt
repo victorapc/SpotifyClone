@@ -20,7 +20,7 @@ object ServiceModule {
 
     @ServiceScoped
     @Provides
-    fun provideMusicDataBase() = MusicDatabase()
+    fun provideMusicDatabase() = MusicDatabase()
 
     @ServiceScoped
     @Provides
